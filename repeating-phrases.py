@@ -99,14 +99,14 @@ def suffix_counts(suffix):
 
 def left_maximal(text, suffix, W1):
 	c1 = suffix_count_of_word(suffix, W1)
-	W2 = text[:-len(W)]
+	W2 = text[:-len(W1)]
 	c2 = suffix_count_of_word(suffix, W2)
 	print " c2 = (%d, '%s') and c1 = (%d, '%s')  " %  (c2, W2, c1, W1)
 	return c2 < c1 
 
 
 def get_text():
-	input_filename = 'state of the union 2011 lowercased ascii.txt'
+	input_filename = sys.argv[1]
 	with open(input_filename, 'r') as f:
 		text = f.read().strip()
 	f.closed
@@ -118,7 +118,7 @@ def get_text():
 
 text = get_text()
 
-print "  text[]  (size = %10d bytes)" % sys.getsizeof(text)
+#print "  text[]  (size = %10d bytes)" % sys.getsizeof(text)
 # pprint(text)
 
 import time
@@ -127,30 +127,30 @@ t0 = time.clock()
 suffix = suffix_array(text)
 t = (time.clock() - t0) * 10
 
-print "suffix[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(suffix), t)
+#print "suffix[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(suffix), t)
 # pprint(suffix)
 
 t0 = time.clock()
 lcp = longest_common_prefix(suffix)
 t = (time.clock() - t0) * 10
-print "   lcp[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(lcp), t)
+#print "   lcp[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(lcp), t)
 # pprint(lcp)
 
 t0 = time.clock()
 count = suffix_counts(suffix)
 t = (time.clock() - t0) * 10
-print " count[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(count), t)
+#print " count[]  (size = %10d bytes, exec_time = %5f)" % (sys.getsizeof(count), t)
 # pprint(count)
 	
 
 max_lcp, i = max_value_and_index(lcp)
 phrase = suffix[i][:lcp[i]]
-print "longest repeated phrase = %d X '%s' " % (count[i], phrase)
+#print "longest repeated phrase = %d X '%s' " % (count[i], phrase)
 
 
 max_count, i = max_value_and_index(count)
 phrase = suffix[i][:lcp[i]]
-print "   most repeated phrase = %d X '%s' " % (max_count, phrase)
+#print "   most repeated phrase = %d X '%s' " % (max_count, phrase)
 
 # print "  # lpc suffix"
 # for i in xrange(len(text)):
@@ -168,7 +168,7 @@ def wcount(text):
 
 def print_maximal_phrases(suffix, lcp, count):
 	prev = ""
-	print '%s\t%s\t%s' % ("count", "numberwords", "phrase")
+	#print '%s\t%s\t%s' % ("count", "numberwords", "phrase")
 	for i in xrange(len(suffix)):
 		w = suffix[i][:lcp[i]]
 		if w.strip() == prev.strip():
